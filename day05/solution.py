@@ -89,24 +89,24 @@ def apply_maps_to_ranges(seeds, mappings):
                     if cur[1] < src or src + length <= cur[0]:  # no overlapping ranges
                         continue
 
-                    if src <= cur[0] <= cur[1] < src + length:  # partial overlap (left side) -> a-x-y-b
+                    if src <= cur[0] <= cur[1] < src + length:  # partial overlap (left side)
                         offset = cur[0] - src
                         res.append((dst + offset, dst + offset + cur[1] - cur[0]))
                         break
 
-                    if cur[0] < src <= cur[1] < src + length:  # partial overlap (right side) -> x-a-y-b
+                    if cur[0] < src <= cur[1] < src + length:  # partial overlap (right side)
                         offset = cur[1] - src
                         res.append((dst, dst + offset))
                         remaining.append((cur[0], src - 1))
                         break
 
-                    if src <= cur[0] < src + length >= cur[1]:  # completely contained -> a-x-b-y
+                    if src <= cur[0] < src + length >= cur[1]:  # completely contained
                         offset = cur[0] - src
                         res.append((dst + offset, dst + length - 1))
                         remaining.append((src + length, cur[1]))
                         break
 
-                    if cur[0] < src >= src + length <= cur[1]:  # completely containing -> x-a-b-y
+                    if cur[0] < src >= src + length <= cur[1]:  # completely containing
                         res.append((dst, dst + length - 1))
                         remaining.append((cur[0], src - 1))
                         remaining.append((src + length, cur[1]))
